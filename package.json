@@ -1,0 +1,40 @@
+{
+  "name": "info-vis-spring2023",
+  "version": "1.0.0",
+  "description": "course project",
+  "main": "index.js",
+  "scripts": {
+    "prepare": "husky install",
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "tests/**/*.{js,jsx,ts,tsx,json,css,less,md}": [
+      "prettier --write"
+    ],
+    "src/**/*.{js,jsx,ts,tsx,json,css,less,md}": [
+      "prettier --write"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NigelLu/Info-Vis-Spring2023.git"
+  },
+  "keywords": [
+    "d3.js"
+  ],
+  "author": "NigelLu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NigelLu/Info-Vis-Spring2023/issues"
+  },
+  "homepage": "https://github.com/NigelLu/Info-Vis-Spring2023#readme",
+  "devDependencies": {
+    "eslint": "^8.34.0",
+    "eslint-plugin-react": "^7.32.2",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.2"
+  },
+  "dependencies": {
+    "d3": "^7.8.2"
+  }
+}
