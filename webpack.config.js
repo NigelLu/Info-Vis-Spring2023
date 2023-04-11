@@ -29,6 +29,7 @@ module.exports = {
     static: { directory: path.join(__dirname, "public/"), publicPath: "/" },
     hot: true,
     open: false,
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({ template: "public/index.html", filename: "index.html", inject: true }),

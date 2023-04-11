@@ -5,7 +5,7 @@ import WorldComparison from "./pages/WorldComparison";
 
 export default [
   {
-    path: "/",
+    path: "/country-trend",
     pageName: "Country Trend",
     component: CountryTrend,
   },
