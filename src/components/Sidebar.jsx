@@ -14,6 +14,7 @@ const { Sider } = Layout;
 export default function Sidebar({
   theme,
   pagePathMap,
+  layoutHeight,
   selectedPage,
   setSelectedPage,
   sidebarCollapsed,
@@ -63,8 +64,7 @@ export default function Sidebar({
       theme={theme}
       style={{
         paddingTop: 15,
-        backgroundColor: "#ffffff",
-        minHeight: "100vh",
+        height: layoutHeight.sidebar,
       }}
       collapsed={sidebarCollapsed}
       onBreakpoint={(broken) => setSidebarCollapsed(broken)}

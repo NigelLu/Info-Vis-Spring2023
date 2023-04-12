@@ -11,7 +11,7 @@ const HeaderAntd = Layout.Header;
 
 // endregion CONSTANTS
 
-export default function Header({ theme, sidebarCollapsed, setSidebarCollapsed }) {
+export default function Header({ theme, layoutHeight, sidebarCollapsed, setSidebarCollapsed }) {
   return (
     <HeaderAntd
       theme={theme}
@@ -20,6 +20,7 @@ export default function Header({ theme, sidebarCollapsed, setSidebarCollapsed })
         marginLeft: -40,
         background: "#ffffff",
         backgroundColor: "#ffffff",
+        height: layoutHeight.header,
       }}
     >
       <Row>
@@ -32,7 +33,7 @@ export default function Header({ theme, sidebarCollapsed, setSidebarCollapsed })
         <Col span={24 - COLLAPSE_BUTTON_SPAN}>
           <Row>
             <Col span={8}>
-              <p style={{ fontSize: "15px", color: "rgba(0, 0, 0, 0.6)", marginTop: "-0.1rem" }}>
+              <p style={{ fontSize: "15px", color: "rgba(0, 0, 0, 0.6)", marginTop: "0rem" }}>
                 <b>Information Visualization 2023</b>
               </p>
             </Col>

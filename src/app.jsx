@@ -4,6 +4,7 @@ import { Layout } from "antd";
 import routeConfig from "./route";
 import fetchCsv from "./common/csv";
 import React, { useState } from "react";
+import Footer from "./components/Footer";
 import Header from "./components/Header.jsx";
 import Sidebar from "./components/Sidebar.jsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -13,11 +14,28 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 const THEME = "light";
 const { Content } = Layout;
 const CSV_URL = "/data/Final.csv";
+const LAYOUT_HEIGHT = {
+  header: "5vh",
+  footer: "5vh",
+  sidebar: "90vh",
+};
 
 // endregion CONSTANTS
 
 export default function App() {
   const { csvData, csvDataPending } = fetchCsv(CSV_URL);
+
+  // const countMap = {};
+  // let count = 0;
+
+  // !csvDataPending &&
+  //   csvData.forEach((ele) => {
+  //     if (!(ele.country in countMap)) {
+  //       countMap[ele.country] = null;
+  //       count += 1;
+  //     }
+  //   });
+  // console.log(count);
 
   // region states & memos
   const pagePathMap = {};
@@ -29,7 +47,12 @@ export default function App() {
 
   // region component props
   const routedComponentProps = { csvData, csvDataPending };
-  const headerProps = { theme: THEME, sidebarCollapsed, setSidebarCollapsed };
+  const headerProps = {
+    theme: THEME,
+    sidebarCollapsed,
+    setSidebarCollapsed,
+    layoutHeight: LAYOUT_HEIGHT,
+  };
   const sidebarProps = {
     theme: THEME,
     pagePathMap,
@@ -37,6 +60,10 @@ export default function App() {
     setSelectedPage,
     sidebarCollapsed,
     setSidebarCollapsed,
+    layoutHeight: LAYOUT_HEIGHT,
+  };
+  const footerProps = {
+    layoutHeight: LAYOUT_HEIGHT,
   };
   // endregion component props
 
@@ -44,15 +71,14 @@ export default function App() {
     <>
       <Router>
         <Layout style={{ fontFamily: "sans-serif" }}>
-          <Sidebar {...sidebarProps} />
-          <Layout>
-            <Header {...headerProps} />
+          <Header {...headerProps} />
+          <Layout hasSider>
+            <Sidebar {...sidebarProps} />
             <Content
               style={{
                 margin: 0,
                 padding: 0,
                 minHeight: 280,
-                paddingLeft: 50,
                 textAlign: "center",
                 background: "#ffffff",
               }}
@@ -68,6 +94,7 @@ export default function App() {
               </Routes>
             </Content>
           </Layout>
+          <Footer {...footerProps} />
         </Layout>
       </Router>
     </>

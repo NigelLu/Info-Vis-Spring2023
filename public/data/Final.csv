@@ -1,4 +1,4 @@
-index,entity,code,year,cellularSubscription,internetUsersPercentage,internetUserNum,broadbandSubscription
+index,country,code,year,cellularSubscription,internetUsersPercentage,internetUserNum,broadbandSubscription
 0,Afghanistan,AFG,1980,0,0,0,0
 1,Afghanistan,AFG,1981,0,0,0,0
 2,Afghanistan,AFG,1982,0,0,0,0
