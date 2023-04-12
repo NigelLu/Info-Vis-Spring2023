@@ -28,6 +28,7 @@ export default function App() {
   // endregion states & memos
 
   // region component props
+  const routedComponentProps = { csvData, csvDataPending };
   const headerProps = { theme: THEME, sidebarCollapsed, setSidebarCollapsed };
   const sidebarProps = {
     theme: THEME,
@@ -38,6 +39,7 @@ export default function App() {
     setSidebarCollapsed,
   };
   // endregion component props
+
   return (
     <>
       <Router>
@@ -51,12 +53,17 @@ export default function App() {
                 padding: 0,
                 minHeight: 280,
                 paddingLeft: 50,
+                textAlign: "center",
                 background: "#ffffff",
               }}
             >
               <Routes>
                 {routeConfig.map((route, i) => (
-                  <Route path={route.path} key={i} element={route.component()} />
+                  <Route
+                    path={route.path}
+                    key={i}
+                    element={route.component(routedComponentProps)}
+                  />
                 ))}
               </Routes>
             </Content>
