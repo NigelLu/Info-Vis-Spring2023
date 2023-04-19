@@ -13,7 +13,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const THEME = "light";
 const { Content } = Layout;
-const CSV_URL = "/data/Final.csv";
+const CSV_URL = "/data/Internet_Users.csv";
 const LAYOUT_HEIGHT = {
   header: "5vh",
   footer: "5vh",
