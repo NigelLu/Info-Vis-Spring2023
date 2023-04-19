@@ -103,6 +103,7 @@ dist
 # TernJS port file
 .tern-port
 
-# dataset
-public/data/yelp_dataset/*.pdf
-public/data/yelp_dataset/*.json
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
