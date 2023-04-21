@@ -1,8 +1,9 @@
+import json
 from tqdm import tqdm
 from typing import List
 
 
-def _buildAttributeIndexMap(attribute_list: List[str]) -> dict[str, int]:
+def buildAttributeIndexMap(attribute_list: List[str]) -> dict[str, int]:
     return {attribute: idx for idx, attribute in enumerate(attribute_list)}
 
 
@@ -12,8 +13,8 @@ def removeTrail(data: List[List[str]]) -> None:
 
 
 def innerJoin(data_a: List[List[str]], data_b: List[List[str]], join_attributes: List[str], select_attributes: List[str]) -> List[List[str]]:
-    attribute_index_map_a = _buildAttributeIndexMap(data_a[0])
-    attribute_index_map_b = _buildAttributeIndexMap(data_b[0])
+    attribute_index_map_a = buildAttributeIndexMap(data_a[0])
+    attribute_index_map_b = buildAttributeIndexMap(data_b[0])
 
     result = []
     for row_a in tqdm(data_a[1:]):
@@ -57,7 +58,7 @@ def flattenGDP(data: List[List[str]],
                                    "2008", "2009", "2010", "2011", "2012", "2013",
                                    "2014", "2015", "2016", "2017", "2018", "2019",
                                    "2020", "2021", ]) -> List[List[str]]:
-    attribute_index_map = _buildAttributeIndexMap(data[0])
+    attribute_index_map = buildAttributeIndexMap(data[0])
     result = [["country", "year", "GdpPerCapita"]]
 
     for row in data:
@@ -66,3 +67,16 @@ def flattenGDP(data: List[List[str]],
                           year, row[attribute_index_map[year]]])
 
     return result
+
+
+def buildCountryRegionMap(json_file_path: str) -> dict[str, str]:
+    # * read and load the json list
+    country_region_list = None
+    with open(json_file_path, "r") as f:
+        country_region_list = json.loads(f.read())
+
+    country_region_map = {}
+    for country_info in country_region_list:
+        country_region_map[country_info['name']] = country_info['sub-region']
+
+    return country_region_map
