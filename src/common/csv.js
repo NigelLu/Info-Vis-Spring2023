@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 
 // region CONSTANTS
 const numberAttributes = [
+  "year",
   "GdpPerCapita",
   "internetUserNum",
   "cellularSubscription",

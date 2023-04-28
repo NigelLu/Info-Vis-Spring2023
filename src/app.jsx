@@ -5,15 +5,17 @@ import routeConfig from "./route";
 import fetchCsv from "./common/csv";
 import React, { useState } from "react";
 import Footer from "./components/Footer";
+import fetchGeoData from "./common/geodata";
 import Header from "./components/Header.jsx";
 import Sidebar from "./components/Sidebar.jsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // region CONSTANTS
+const { Content } = Layout;
 
 const THEME = "light";
-const { Content } = Layout;
 const CSV_URL = "/data/result.csv";
+const TOPOJSON_URL = "/data/worldmap.json";
 const LAYOUT_HEIGHT = {
   header: "5vh",
   footer: "5vh",
@@ -24,18 +26,7 @@ const LAYOUT_HEIGHT = {
 
 export default function App() {
   const { csvData, csvDataPending } = fetchCsv(CSV_URL);
-
-  // const countMap = {};
-  // let count = 0;
-
-  // !csvDataPending &&
-  //   csvData.forEach((ele) => {
-  //     if (!(ele.country in countMap)) {
-  //       countMap[ele.country] = null;
-  //       count += 1;
-  //     }
-  //   });
-  // console.log(count);
+  const { geoData, fetchGeoDataPending } = fetchGeoData(TOPOJSON_URL);
 
   // region states & memos
   const pagePathMap = {};
@@ -46,7 +37,7 @@ export default function App() {
   // endregion states & memos
 
   // region component props
-  const routedComponentProps = { csvData, csvDataPending };
+  const routedComponentProps = { csvData, csvDataPending, geoData, fetchGeoDataPending };
   const headerProps = {
     theme: THEME,
     sidebarCollapsed,
