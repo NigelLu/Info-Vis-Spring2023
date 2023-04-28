@@ -2,6 +2,11 @@
 
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const WebpackMessages = require("./src/common/webpackMsgUtils");
+
+// region CONFIG CONSTANTS
+const PORT = 3000;
+// endregion CONFIG CONSTANTS
 
 module.exports = {
   entry: "./src/index.js",
@@ -25,13 +30,20 @@ module.exports = {
     path: path.resolve(__dirname, "dist/"),
   },
   devServer: {
-    port: 3000,
+    port: PORT,
     static: { directory: path.join(__dirname, "public/"), publicPath: "/" },
     hot: true,
     open: false,
     historyApiFallback: true,
   },
   plugins: [
+    new WebpackMessages({
+      port: PORT,
+      name: "client",
+      logger: (str) => {
+        console.log(`>>> ${str}`);
+      },
+    }),
     new HtmlWebpackPlugin({ template: "public/index.html", filename: "index.html", inject: true }),
   ],
   stats: "errors-only",
