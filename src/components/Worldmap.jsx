@@ -1,6 +1,7 @@
 /** @format */
 
-import { min, max, scaleLinear } from "d3";
+import Legend from "./Legend";
+import { scaleLinear } from "d3";
 import React, { useState } from "react";
 import { pickYearlyData, getMostRecentYear } from "../common/dataUtils";
 import { geoPath, geoEqualEarth, geoMercator, geoEquirectangular } from "d3-geo";
@@ -269,13 +270,6 @@ export const DEFAULT_COLOR_PALETTE = [
   "#7f2704",
 ];
 
-function camelToFlat(camel) {
-  const wordArr = camel.replace(/([a-z])([A-Z])/g, "$1 $2").split(" ");
-  wordArr[0] = `${wordArr[0][0].toUpperCase()}${wordArr[0].slice(1, wordArr[0].length)}`;
-
-  return wordArr.join(" ");
-}
-
 export default function Worldmap({
   width,
   height,
@@ -292,7 +286,7 @@ export default function Worldmap({
     .range([colorPalette[0], colorPalette[colorPalette.length - 1]]);
 
   const [highlightCountry, setHighlightCountry] = useState(null);
-  console.log(highlightCountry?.properties.name);
+  if (highlightCountry) console.log(highlightCountry?.properties.name);
 
   let path = null;
   switch (projection) {
@@ -310,9 +304,20 @@ export default function Worldmap({
       break;
   }
 
+  const legendProps = {
+    unit: "%",
+    name: field,
+    colorPalette,
+    y: height * 0.8,
+    x: width * 0.025,
+    scale: colorScale,
+    width: width * 0.1,
+    height: height * 0.025,
+  };
+
   return (
     <>
-      <svg width='90%' viewBox={`-30 -20 ${width} ${height}`}>
+      <svg width='90%' viewBox={`0 75 ${width} ${height}`}>
         <g>
           {geoData.features.map((feature) => {
             return (
@@ -328,9 +333,14 @@ export default function Worldmap({
               />
             );
           })}
-          <path fill='none' stroke='black' strokeWidth='1' d={path(highlightCountry)} />
-          <g transform={`translate(${width * 0.9}, ${height * 0.9})`}></g>
+          <path
+            fill='none'
+            stroke='black'
+            d={path(highlightCountry)}
+            strokeWidth={`${width * 0.0015}`}
+          />
         </g>
+        <Legend {...legendProps}></Legend>
       </svg>
     </>
   );
