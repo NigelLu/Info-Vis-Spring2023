@@ -1,12 +1,12 @@
 /** @format */
 
 import * as d3 from "d3";
+import React, { useMemo } from "react";
 import { camelToFlat } from "../common/dataUtils";
-import React, { useMemo, useEffect } from "react";
 
 const NUM_OF_TICKS = 5;
 
-export default function Legend({
+export default function ColorScaleLegend({
   x,
   y,
   unit,

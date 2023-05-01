@@ -1,32 +1,48 @@
 /** @format */
 
 import * as d3 from "d3";
-import React from "react";
+import React, { useMemo } from "react";
+import CategoryLegend from "./CategoryLegend";
 import { camelToFlat } from "../common/dataUtils";
 import { FIELD_TYPE_MAP } from "../common/dataUtils";
 
-function _generateLinePath({ data, xScale, yScale, xField, yField, xTickOffset, yTickOffset }) {
-  if (!data.length) return "";
-  const start = `M${xScale(data[0][xField]) + xTickOffset} ${
-    yScale(data[0][yField]) + yTickOffset
-  }`;
-  return data.reduce(
-    (prev, d) => `${prev} L ${xScale(d[xField]) + xTickOffset} ${yScale(d[yField]) + yTickOffset}`,
-    start,
-  );
+function _buildCategorizedDataMap({ data, categoryField }) {
+  const categories = [];
+  const categoryDataMap = {};
+  data.forEach((d) => {
+    if (categoryDataMap[d[categoryField]]) {
+      categoryDataMap[d[categoryField]].push(d);
+    } else {
+      categoryDataMap[d[categoryField]] = [d];
+      categories.push(d[categoryField]);
+    }
+  });
+  return [categories, categoryDataMap];
 }
 
-export default function LineChart({
+const CATEGORY_10_COLORS = [
+  "#1f77b4",
+  "#ff7f0e",
+  "#2ca02c",
+  "#d62728",
+  "#9467bd",
+  "#8c564b",
+  "#e377c2",
+  "#7f7f7f",
+  "#bcbd22",
+  "#17becf",
+];
+
+export default function ScatterPlot({
   x,
   y,
   data,
   width,
   height,
-  dotColor,
-  lineColor,
   dotRadius,
   xFieldInfo,
   yFieldInfo,
+  dotCategoryField,
 }) {
   // * xScale
   let xScale = null;
@@ -98,6 +114,27 @@ export default function LineChart({
       break;
   }
 
+  // * categoryDataMap
+  const [categories, categoryDataMap, categoryColorMap] = useMemo(() => {
+    const [categories, categoryDataMap] = _buildCategorizedDataMap({
+      data,
+      categoryField: dotCategoryField,
+    });
+    const categoryColorMap = categories.reduce((prev, category, idx) => {
+      prev[category] = CATEGORY_10_COLORS[idx];
+      return prev;
+    }, {});
+    return [categories, categoryDataMap, categoryColorMap];
+  }, [data, dotCategoryField]);
+
+  const categoryLegendProps = {
+    x: width * 0.75,
+    categoryColorMap,
+    y: height * 0.7,
+    width: width * 0.2,
+    height: height * 0.2,
+  };
+
   return (
     <>
       <g transform={`translate(${x}, ${y})`}>
@@ -105,11 +142,11 @@ export default function LineChart({
         <g transform={`translate(0, ${height})`}>
           <text
             x={width}
-            y={-height * 0.04}
+            y={-height * 0.02}
             style={{
               textAnchor: "end",
               fontWeight: "bold",
-              fontSize: `${Math.floor(height * 0.04)}px`,
+              fontSize: `${Math.floor(height * 0.025)}px`,
             }}
           >
             {camelToFlat(xFieldInfo.field)}
@@ -119,10 +156,8 @@ export default function LineChart({
             <g key={tickVal} transform={`translate(${xScale(tickVal) + xTickOffset}, 0)`}>
               <line y2={5} stroke={"black"}></line>
               <text
-                x={7}
-                y={5}
-                transform='rotate(70)'
-                style={{ textAnchor: "start", fontSize: `${Math.floor(height * 0.0225)}px` }}
+                y={20}
+                style={{ textAnchor: "middle", fontSize: `${Math.floor(height * 0.02)}px` }}
               >
                 {tickVal}
               </text>
@@ -134,12 +169,12 @@ export default function LineChart({
         <g>
           <text
             x={-height * 0.5}
-            y={-width * 0.12}
+            y={-width * 0.05}
             transform='rotate(-90)'
             style={{
               fontWeight: "bold",
               textAnchor: "middle",
-              fontSize: `${Math.floor(height * 0.035)}px`,
+              fontSize: `${Math.floor(height * 0.025)}px`,
             }}
           >
             {camelToFlat(yFieldInfo.field)}
@@ -148,40 +183,36 @@ export default function LineChart({
           {yScaleTicks.map((tickVal) => (
             <g key={tickVal} transform={`translate(-5, ${yScale(tickVal) + yTickOffset})`}>
               <line x2={5} stroke={"black"} />
-              <text style={{ textAnchor: "end", fontSize: `${Math.floor(height * 0.025)}px` }}>
+              <text
+                y={5}
+                x={-5}
+                style={{ textAnchor: "end", fontSize: `${Math.floor(height * 0.02)}px` }}
+              >
                 {tickVal}
               </text>
             </g>
           ))}
         </g>
 
-        {/* line */}
+        {/* scatter dots & legend */}
         <g>
-          {data.map((d, idx) => (
-            <g key={`${d[xFieldInfo.field]}-${d[yFieldInfo.field]}`}>
-              <circle
-                fill='none'
-                r={dotRadius}
-                stroke={dotColor}
-                cx={xScale(d[xFieldInfo.field]) + xTickOffset}
-                cy={yScale(d[yFieldInfo.field]) + yTickOffset}
-              ></circle>
-            </g>
-          ))}
-          <path
-            d={_generateLinePath({
-              data,
-              xScale,
-              yScale,
-              xTickOffset,
-              yTickOffset,
-              xField: xFieldInfo.field,
-              yField: yFieldInfo.field,
-            })}
-            fill='none'
-            stroke={lineColor}
-            strokeWidth={1}
-          />
+          {categories.map((category, idx) => {
+            const dotColor = CATEGORY_10_COLORS[idx];
+            return categoryDataMap[category].map((d, idx) => (
+              <g
+                key={`${category}-${d[xFieldInfo.field]}-${d[yFieldInfo.field]}-${dotColor}-${idx}`}
+              >
+                <circle
+                  r={dotRadius}
+                  stroke={dotColor}
+                  fill={`${dotColor}99`}
+                  cx={xScale(d[xFieldInfo.field]) + xTickOffset}
+                  cy={yScale(d[yFieldInfo.field]) + yTickOffset}
+                ></circle>
+              </g>
+            ));
+          })}
+          <CategoryLegend {...categoryLegendProps} />
         </g>
       </g>
     </>

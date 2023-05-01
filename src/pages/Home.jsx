@@ -1,10 +1,11 @@
 /** @format */
 
 import { Spin } from "antd";
+import LineChart from "../components/LineChart";
 import React, { useEffect, useState } from "react";
+import { FIELD_TYPE_MAP } from "../common/dataUtils";
 import { pickCountryData } from "../common/dataUtils";
 import Worldmap, { GEO_MERCATOR } from "../components/Worldmap";
-import LineChart, { FIELD_TYPE_MAP } from "../components/LineChart";
 
 // #region CONSTANTS
 const LAYOUT = {

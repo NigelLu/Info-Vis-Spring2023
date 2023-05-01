@@ -1,10 +1,10 @@
 /** @format */
 
-import Legend from "./Legend";
+import React from "react";
 import { scaleLinear } from "d3";
-import React, { useState } from "react";
+import ColorScaleLegend from "./ColorScaleLegend";
+import { pickYearlyData, getMostRecentYear } from "../common/dataUtils";
 import { geoPath, geoEqualEarth, geoMercator, geoEquirectangular } from "d3-geo";
-import { pickYearlyData, getMostRecentYear, pickCountryData } from "../common/dataUtils";
 
 // * CONSTANTS
 
@@ -307,7 +307,7 @@ export default function Worldmap({
       break;
   }
 
-  const legendProps = {
+  const colorScaleLegendProps = {
     unit: "%",
     name: field,
     colorPalette,
@@ -341,7 +341,7 @@ export default function Worldmap({
           d={path(highlightCountry)}
           strokeWidth={`${width * 0.0005}`}
         />
-        <Legend {...legendProps} />
+        <ColorScaleLegend {...colorScaleLegendProps} />
       </g>
     </>
   );

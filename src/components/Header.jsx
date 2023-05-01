@@ -27,7 +27,7 @@ export default function Header({ theme, layoutHeight, sidebarCollapsed, setSideb
       {React.createElement(sidebarCollapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
         className: "trigger",
         onClick: () => setSidebarCollapsed(!sidebarCollapsed),
-        style: { marginLeft: `-${Math.floor(windowSize.windowWidth * 0.02)}px` },
+        style: { marginLeft: `-${Math.floor(windowSize.windowWidth * 0.01)}px` },
       })}
       <span
         style={{

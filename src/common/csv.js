@@ -16,7 +16,7 @@ const numberAttributes = [
 
 // * fetch and store csv
 export default function fetchCsv(csvPath) {
-  const [csvData, setCsvData] = useState(null);
+  const [csvData, setCsvData] = useState([]);
   const [csvDataPending, setCsvDataPending] = useState(true);
 
   useEffect(() => {
