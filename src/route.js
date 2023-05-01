@@ -1,19 +1,19 @@
 /** @format */
 
 import Home from "./pages/Home";
-import CountryTrend from "./pages/CountryTrend";
-import WorldComparison from "./pages/WorldComparison";
+import RegionCorrelation from "./pages/RegionCorrelation";
+import CountryCorrelation from "./pages/CountryCorrelation";
 
 export default [
   { path: "/home", pageName: "Home", component: Home },
   {
-    path: "/country-trend",
-    pageName: "Country Trend",
-    component: CountryTrend,
+    path: "/region-correlation",
+    pageName: "Region Correlation",
+    component: RegionCorrelation,
   },
   {
-    path: "/world-comparison",
-    pageName: "World Comparison",
-    component: WorldComparison,
+    path: "/country-correlation",
+    pageName: "Country Correlation",
+    component: CountryCorrelation,
   },
 ];

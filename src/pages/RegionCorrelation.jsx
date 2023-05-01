@@ -3,10 +3,10 @@
 import React from "react";
 import { Spin } from "antd";
 
-export default function WorldComparison({ csvData, csvDataPending }) {
+export default function RegionCorrelation({ csvData, csvDataPending }) {
   return csvDataPending ? (
     <Spin size='large' spinning style={{ marginTop: "40vh" }} />
   ) : (
-    <h1>World Comparison</h1>
+    <h1>Region Correlation</h1>
   );
 }
