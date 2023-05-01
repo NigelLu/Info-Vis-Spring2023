@@ -1,16 +1,10 @@
 /** @format */
 
 import * as d3 from "d3";
+import { camelToFlat } from "../common/dataUtils";
 import React, { useMemo, useEffect } from "react";
 
 const NUM_OF_TICKS = 5;
-
-export function camelToFlat(camel) {
-  const wordArr = camel.replace(/([a-z])([A-Z])/g, "$1 $2").split(" ");
-  wordArr[0] = `${wordArr[0][0].toUpperCase()}${wordArr[0].slice(1, wordArr[0].length)}`;
-
-  return wordArr.join(" ");
-}
 
 export default function Legend({
   x,
@@ -50,7 +44,7 @@ export default function Legend({
             <line y1={height * 0.75} y2={height * 1.25} stroke={"rgba(0,0,0,0.5)"} />
             <text
               style={{ textAnchor: "start", fontSize: "0.5rem" }}
-              transform={`translate(-${height * 0.15}, ${height * 1.5}) rotate(60)`}
+              transform={`translate(-${height * 0.15}, ${height * 2}) rotate(60)`}
             >
               {`${Math.ceil(legendLabelScale(color))}${unit}`}
             </text>

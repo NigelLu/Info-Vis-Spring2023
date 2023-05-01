@@ -25,3 +25,14 @@ export function pickYearlyData(csvData, year, field) {
 
   return yearlyDataMap;
 }
+
+export function pickCountryData(csvData, country) {
+  return csvData.filter((d) => d.country.toLowerCase() === country.toLowerCase());
+}
+
+export function camelToFlat(camel) {
+  const wordArr = camel.replace(/([a-z])([A-Z])/g, "$1 $2").split(" ");
+  wordArr[0] = `${wordArr[0][0].toUpperCase()}${wordArr[0].slice(1, wordArr[0].length)}`;
+
+  return wordArr.join(" ");
+}

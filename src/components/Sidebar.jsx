@@ -1,15 +1,16 @@
 /** @format */
 
 import { Layout, Menu } from "antd";
+import { WINDOW_CONTEXT } from "../app";
 import { useNavigate } from "react-router-dom";
-import React, { useMemo, useEffect } from "react";
 import { RightOutlined } from "@ant-design/icons";
+import React, { useMemo, useEffect, useContext } from "react";
 
-// region CONSTANTS
+// #region CONSTANTS
 
 const { Sider } = Layout;
 
-// endregion CONSTANTS
+// #endregion CONSTANTS
 
 export default function Sidebar({
   theme,
@@ -21,8 +22,9 @@ export default function Sidebar({
   setSidebarCollapsed,
 }) {
   const navigate = useNavigate();
+  const windowSize = useContext(WINDOW_CONTEXT);
 
-  // region states & memos
+  // #region states & memos
 
   // * build the sidebarItems Array
   const sidebarItems = useMemo(
@@ -46,28 +48,27 @@ export default function Sidebar({
     [pagePathMap, selectedPage, setSelectedPage],
   );
 
-  // endregion states & memos
+  // #endregion states & memos
 
-  // region effects
+  // #region effects
 
   // * navigate to the page while selected page changes
   useEffect(() => {
     navigate(pagePathMap[selectedPage]);
   }, [selectedPage]);
-  // endregion effects
+  // #endregion effects
 
   return (
     <Sider
-      width={200}
       breakpoint='lg'
-      collapsedWidth={55}
       theme={theme}
-      style={{
-        paddingTop: 15,
-        height: layoutHeight.sidebar,
-      }}
       collapsed={sidebarCollapsed}
+      width={Math.floor(windowSize.windowWidth * 0.15)}
       onBreakpoint={(broken) => setSidebarCollapsed(broken)}
+      collapsedWidth={Math.max(Math.floor(windowSize.windowWidth * 0.05), 55)}
+      style={{
+        height: `${Math.floor(layoutHeight.sidebar * windowSize.windowHeight)}px`,
+      }}
     >
       <Menu
         mode='inline'

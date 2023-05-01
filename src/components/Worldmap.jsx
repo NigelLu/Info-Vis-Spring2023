@@ -3,8 +3,8 @@
 import Legend from "./Legend";
 import { scaleLinear } from "d3";
 import React, { useState } from "react";
-import { pickYearlyData, getMostRecentYear } from "../common/dataUtils";
 import { geoPath, geoEqualEarth, geoMercator, geoEquirectangular } from "d3-geo";
+import { pickYearlyData, getMostRecentYear, pickCountryData } from "../common/dataUtils";
 
 // * CONSTANTS
 
@@ -271,11 +271,15 @@ export const DEFAULT_COLOR_PALETTE = [
 ];
 
 export default function Worldmap({
+  x,
+  y,
   width,
   height,
   csvData,
   geoData,
   projection,
+  highlightCountry,
+  setHighlightCountry,
   field = "internetUsersPercentage",
   colorPalette = DEFAULT_COLOR_PALETTE,
 }) {
@@ -285,7 +289,6 @@ export default function Worldmap({
     .domain([0, 100])
     .range([colorPalette[0], colorPalette[colorPalette.length - 1]]);
 
-  const [highlightCountry, setHighlightCountry] = useState(null);
   if (highlightCountry) console.log(highlightCountry?.properties.name);
 
   let path = null;
@@ -308,8 +311,8 @@ export default function Worldmap({
     unit: "%",
     name: field,
     colorPalette,
-    y: height * 0.8,
-    x: width * 0.025,
+    x: width * 0.85,
+    y: height * 1.1,
     scale: colorScale,
     width: width * 0.1,
     height: height * 0.025,
@@ -317,31 +320,29 @@ export default function Worldmap({
 
   return (
     <>
-      <svg width='90%' viewBox={`0 75 ${width} ${height}`}>
-        <g>
-          {geoData.features.map((feature) => {
-            return (
-              <path
-                d={path(feature)}
-                className={"boundary"}
-                key={feature.properties.name + "boundary"}
-                onMouseLeave={() => setHighlightCountry(null)}
-                onMouseEnter={() => setHighlightCountry(feature)}
-                style={{
-                  fill: colorScale(mostRecentYearDataMap[feature.properties.name]) || "gray",
-                }}
-              />
-            );
-          })}
-          <path
-            fill='none'
-            stroke='black'
-            d={path(highlightCountry)}
-            strokeWidth={`${width * 0.0015}`}
-          />
-        </g>
-        <Legend {...legendProps}></Legend>
-      </svg>
+      <g transform={`translate(${x}, ${y})`}>
+        {geoData.features.map((feature) => {
+          return (
+            <path
+              d={path(feature)}
+              className={"boundary"}
+              key={feature.properties.name + "boundary"}
+              onMouseLeave={() => setHighlightCountry(null)}
+              onMouseEnter={() => setHighlightCountry(feature)}
+              style={{
+                fill: colorScale(mostRecentYearDataMap[feature.properties.name]) || "gray",
+              }}
+            />
+          );
+        })}
+        <path
+          fill='none'
+          stroke='black'
+          d={path(highlightCountry)}
+          strokeWidth={`${width * 0.0005}`}
+        />
+        <Legend {...legendProps} />
+      </g>
     </>
   );
 }
