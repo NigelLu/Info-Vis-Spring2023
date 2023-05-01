@@ -129,7 +129,7 @@ export default function Home({
   // #region props
   const worldmapProps = {
     x: 0,
-    y: 0,
+    y: windowHeight * LAYOUT.worldmap.height * 0.15,
     geoData,
     csvData,
     highlightCountry,

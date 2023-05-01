@@ -111,7 +111,7 @@ export default function CountryCorrelation({ csvData, windowWidth, windowHeight,
           bordered
           showSearch
           allowClear
-          mode='tags'
+          mode='multiple'
           maxTagCount='responsive'
           options={countryOptions}
           style={{ width: "30%" }}

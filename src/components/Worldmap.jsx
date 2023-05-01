@@ -312,7 +312,7 @@ export default function Worldmap({
     name: field,
     colorPalette,
     x: width * 0.85,
-    y: height * 1.1,
+    y: height * 1.025,
     scale: colorScale,
     width: width * 0.1,
     height: height * 0.025,
@@ -320,6 +320,15 @@ export default function Worldmap({
 
   return (
     <>
+      <text
+        x={`${width * 0.5}`}
+        y={`${height * 0.05}`}
+        style={{
+          fontWeight: "bold",
+          textAnchor: "middle",
+          fontSize: `${Math.floor(height * 0.04)}px`,
+        }}
+      >{`Internet User Percentage Choropleth Map (Year ${mostRecentYear})`}</text>
       <g transform={`translate(${x}, ${y})`}>
         {geoData.features.map((feature) => {
           return (

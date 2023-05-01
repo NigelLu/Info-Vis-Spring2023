@@ -169,7 +169,7 @@ export default function ScatterPlot({
         <g>
           <text
             x={-height * 0.5}
-            y={-width * 0.05}
+            y={-width * 0.075}
             transform='rotate(-90)'
             style={{
               fontWeight: "bold",
