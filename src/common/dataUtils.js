@@ -36,3 +36,8 @@ export function camelToFlat(camel) {
 
   return wordArr.join(" ");
 }
+
+export const FIELD_TYPE_MAP = {
+  categorical: "categorical",
+  quantitative: "quantitative",
+};
