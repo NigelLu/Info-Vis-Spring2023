@@ -4,9 +4,9 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const WebpackMessages = require("./src/common/webpackMsgUtils");
 
-// region CONFIG CONSTANTS
+// #region CONFIG CONSTANTS
 const PORT = 3000;
-// endregion CONFIG CONSTANTS
+// #endregion CONFIG CONSTANTS
 
 module.exports = {
   entry: "./src/index.js",

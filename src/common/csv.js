@@ -3,14 +3,16 @@
 import { csv } from "d3";
 import { useState, useEffect } from "react";
 
-// region CONSTANTS
+// #region CONSTANTS
 const numberAttributes = [
+  "year",
+  "GdpPerCapita",
   "internetUserNum",
   "cellularSubscription",
   "broadbandSubscription",
   "internetUsersPercentage",
 ];
-// endregion CONSTANTS
+// #endregion CONSTANTS
 
 // * fetch and store csv
 export default function fetchCsv(csvPath) {

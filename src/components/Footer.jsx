@@ -1,40 +1,45 @@
 /** @format */
 
-import React from "react";
+import { WINDOW_CONTEXT } from "../app";
+import React, { useContext } from "react";
 import { Layout, Row, Col } from "antd";
 
-// region CONSTANTS
+// #region CONSTANTS
 const FooterAntd = Layout.Footer;
-// endregion CONSTANTS
+// #endregion CONSTANTS
 
 export default function Footer({ layoutHeight }) {
+  const windowSize = useContext(WINDOW_CONTEXT);
+
   return (
     <FooterAntd
       style={{
-        fontSize: "0.75rem",
         textAlign: "center",
-        paddingTop: "1.8vh",
-        height: layoutHeight.footer,
-        color: "rgba(0, 0, 0, 0.6)",
+        color: "rgba(0, 0, 0, 0.5)",
         backgroundColor: "rgba(0, 0, 0, 0.05)",
+        paddingTop: `${Math.floor(windowSize.windowHeight * 0.015)}px`,
+        height: `${Math.floor(layoutHeight.footer * windowSize.windowHeight) + 5}px`,
+        fontSize: `${Math.floor((windowSize.windowHeight * layoutHeight.footer) / 3.5)}px`,
       }}
     >
-      DATS-SHU 235 Final Project Group 3, Spring 2023 by Xiaochen (Nigel) Lu &amp; Xingyu (Addison)
-      Guo
-      {/* <div style={{ fontSize: "1vh", top: "-1vh" }}>
-        <b>DATS-SHU 235 Final Project Group 3, Spring 2023</b> by <em>Xiaochen (Nigel) Lu</em> &amp;{" "}
-        <em>Xingyu (Addison) Guo</em>
-      </div> */}
-      {/* <Row style={{ position: "absolute", top: `95.5vh`, left: "45vw" }}>
-        <Col span={24}>
-          <span style={{ fontSize: "0.75vh" }}>
-            by <em>Xiaochen (Nigel) Lu</em> &amp; <em>Xingyu (Addison) Guo</em>
-          </span>
-          <span style={{ fontSize: "1vh" }}>
-            <b>DATS-SHU 235 Final Project Group 3, Spring 2023</b>
-          </span>
+      <Row>
+        <Col
+          span={24}
+          style={{
+            textAlign: "center",
+            fontSize: `${Math.floor(windowSize.windowHeight * 0.0125)}px`,
+          }}
+        >
+          {/* for placeholder reason ONLY */}
+          <p
+            style={{
+              fontSize: `${Math.floor(windowSize.windowHeight * 0.006)}px`,
+            }}
+          ></p>
+          <b>DATS-SHU 235 Final Project Group 3, Spring 2023</b> by <em>Xiaochen (Nigel) Lu</em>{" "}
+          &amp; <em>Xingyu (Addison) Guo</em>
         </Col>
-      </Row> */}
+      </Row>
     </FooterAntd>
   );
 }

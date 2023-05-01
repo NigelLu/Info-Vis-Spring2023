@@ -5,7 +5,7 @@ import CountryTrend from "./pages/CountryTrend";
 import WorldComparison from "./pages/WorldComparison";
 
 export default [
-  { path: "/heatmap", pageName: "Home", component: Home },
+  { path: "/home", pageName: "Home", component: Home },
   {
     path: "/country-trend",
     pageName: "Country Trend",
