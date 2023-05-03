@@ -41,3 +41,10 @@ export const FIELD_TYPE_MAP = {
   categorical: "categorical",
   quantitative: "quantitative",
 };
+
+export function locateData(data, fields, matchValues) {
+  for (let d of data) {
+    if (fields.reduce((prev, field, idx) => prev && d[field] === matchValues[idx], true)) return d;
+  }
+  return;
+}

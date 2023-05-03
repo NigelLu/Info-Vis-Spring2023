@@ -107,23 +107,27 @@ export default function CountryCorrelation({ csvData, windowWidth, windowHeight,
           height: `${windowHeight * LAYOUT.menu.height}`,
         }}
       >
-        <Select
-          bordered
-          showSearch
-          allowClear
-          mode='multiple'
-          maxTagCount='responsive'
-          options={countryOptions}
-          style={{ width: "30%" }}
-          onChange={(values) => {
-            console.log(values);
-            setSelectedCountries(values);
-          }}
-          placeholder='search and select countries'
-          suffixIcon={React.createElement(SearchOutlined, {
-            style: { color: "blue" },
-          })}
-        />
+        <span>
+          <h1>Country Correlation</h1>
+        </span>
+        <span>
+          <Select
+            bordered
+            showSearch
+            allowClear
+            mode='multiple'
+            maxTagCount='responsive'
+            options={countryOptions}
+            style={{ width: "30%" }}
+            onChange={(values) => {
+              setSelectedCountries(values);
+            }}
+            placeholder='search and select countries'
+            suffixIcon={React.createElement(SearchOutlined, {
+              style: { color: "blue" },
+            })}
+          />
+        </span>
       </div>
       <svg
         viewBox={`0 0 ${Math.floor(windowWidth * LAYOUT.width)} ${Math.floor(

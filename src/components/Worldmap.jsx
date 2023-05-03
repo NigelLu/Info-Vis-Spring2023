@@ -289,6 +289,7 @@ export default function Worldmap({
     .domain([0, 100])
     .range([colorPalette[0], colorPalette[colorPalette.length - 1]]);
 
+  // TODO: to be deleted
   if (highlightCountry) console.log(highlightCountry?.properties.name);
 
   let path = null;
