@@ -4,6 +4,7 @@ import { Layout } from "antd";
 import routeConfig from "./route";
 import fetchCsv from "./common/csv";
 import Footer from "./components/Footer";
+import Tooltip from "./components/Tooltip";
 import fetchGeoData from "./common/geodata";
 import Header from "./components/Header.jsx";
 import Sidebar from "./components/Sidebar.jsx";
@@ -32,6 +33,7 @@ export default function App() {
   // #region states & memos
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [highlightedBlockInfo, setHighlightedBlockInfo] = useState({});
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   const [selectedPage, setSelectedPage] = useState(routeConfig[0].pageName);
   const pagePathMap = useMemo(() =>
@@ -63,6 +65,7 @@ export default function App() {
     windowHeight,
     csvDataPending,
     fetchGeoDataPending,
+    setHighlightedBlockInfo,
   };
   const headerProps = {
     theme: THEME,
@@ -81,6 +84,23 @@ export default function App() {
   };
   const footerProps = {
     layoutHeight: LAYOUT_HEIGHT,
+  };
+  const tooltipProps = {
+    width: windowWidth * 0.2,
+    height: windowWidth * 0.125,
+    title: {
+      cardTitle: highlightedBlockInfo.data?.country,
+      statsTitle: "Internet User Percentage",
+    },
+    x:
+      highlightedBlockInfo.x + windowWidth * 0.01 + windowWidth * 0.2 >= windowWidth * 0.95
+        ? highlightedBlockInfo.x - windowWidth * 0.01 - windowWidth * 0.2
+        : highlightedBlockInfo.x + windowWidth * 0.01,
+    y:
+      highlightedBlockInfo.y + windowHeight * 0.01 + windowWidth * 0.125 >= windowHeight * 0.95
+        ? highlightedBlockInfo.y - windowHeight * 0.01 - windowWidth * 0.125
+        : highlightedBlockInfo.y + windowHeight * 0.01,
+    value: highlightedBlockInfo.data?.internetUsersPercentage,
   };
   // #endregion component props
 
@@ -101,6 +121,7 @@ export default function App() {
                   background: "#ffffff",
                 }}
               >
+                <Tooltip {...tooltipProps}></Tooltip>
                 <Routes>
                   {routeConfig.map((route) => (
                     <Route

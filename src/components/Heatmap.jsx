@@ -15,6 +15,7 @@ export default function Heatmap({
   xFieldInfo,
   yFieldInfo,
   heatmapColorRange,
+  setHighlightedBlockInfo,
 }) {
   // * colorScale
   const internetUsersColorScale = d3.scaleLinear().domain([0, 100]).range(heatmapColorRange);
@@ -107,7 +108,7 @@ export default function Heatmap({
       yScaleTicks = yScale.ticks();
       break;
   }
-  console.log(yScaleTicks);
+
   return (
     <>
       <g transform={`translate(${PADDING.left * width}, ${PADDING.top * height})`}>
@@ -168,14 +169,22 @@ export default function Heatmap({
                   <rect
                     x={xScale(xTickVal) + xTickOffset}
                     key={`${xTickVal}-${yTickVal}-rect`}
+                    height={gdpPerCapitaSizeScale(d.GdpPerCapita)}
+                    onMouseLeave={() => setHighlightedBlockInfo({})}
+                    width={gdpPerCapitaSizeScale(d.GdpPerCapita) * 0.5}
+                    fill={internetUsersColorScale(d.internetUsersPercentage)}
                     y={
                       yScale(yTickVal) +
                       yTickOffset * 0.5 -
                       gdpPerCapitaSizeScale(d.GdpPerCapita) * 0.5
                     }
-                    width={gdpPerCapitaSizeScale(d.GdpPerCapita) * 0.5}
-                    height={gdpPerCapitaSizeScale(d.GdpPerCapita)}
-                    fill={internetUsersColorScale(d.internetUsersPercentage)}
+                    onMouseEnter={(evt) =>
+                      setHighlightedBlockInfo({
+                        data: d,
+                        y: evt.clientY,
+                        x: evt.clientX,
+                      })
+                    }
                   ></rect>
                 ) : (
                   <rect

@@ -30,7 +30,14 @@ const LAYOUT = {
 };
 // #endregion CONSTANTS
 
-export default function RegionCorrelation({ csvData, windowWidth, windowHeight, csvDataPending }) {
+export default function RegionCorrelation({
+  csvData,
+  windowWidth,
+  windowHeight,
+  csvDataPending,
+  highlightedBlockInfo,
+  setHighlightedBlockInfo,
+}) {
   // * build a map from geoRegion to Array of data
   const [allYears, dataByGeoRegion] = useMemo(() => {
     const geoRegionData = csvData.filter((d) => GEO_REGIONS.includes(d.country));
@@ -51,6 +58,8 @@ export default function RegionCorrelation({ csvData, windowWidth, windowHeight, 
 
   const heatmapConfigs = {
     data: dataByGeoRegion,
+    highlightedBlockInfo,
+    setHighlightedBlockInfo,
     heatmapColorRange: ["#e9f6e4", "#00441b"],
     width: Math.floor(windowWidth * LAYOUT.heatmap.width),
     height: Math.floor(windowHeight * LAYOUT.heatmap.height),
