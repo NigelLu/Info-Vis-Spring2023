@@ -18,7 +18,7 @@ const INCOME_LEVELS = [
 
 const LAYOUT = {
   width: 0.85,
-  height: 0.8,
+  height: 0.7,
   menu: {
     width: 0.8,
     height: 0.3,
