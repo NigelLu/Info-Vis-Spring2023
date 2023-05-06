@@ -34,13 +34,13 @@ export default function ColorScaleLegend({
         >
           {label}
         </text>
-        {colorPalette.map((color) => (
-          <g key={`${color}-rect`} transform={`translate(${legendColorScale(color)}, 0)`}>
+        {colorPalette.map((color, idx) => (
+          <g key={`${color}-${idx}-rect`} transform={`translate(${legendColorScale(color)}, 0)`}>
             <rect fill={color} height={height} width={width / colorPalette.length}></rect>
           </g>
         ))}
-        {colorToLabel.map((color) => (
-          <g key={`${color}-label`} transform={`translate(${legendColorScale(color)}, 0)`}>
+        {colorToLabel.map((color, idx) => (
+          <g key={`${color}-${idx}-label`} transform={`translate(${legendColorScale(color)}, 0)`}>
             <line y1={height * 0.75} y2={height * 1.25} stroke={"rgba(0,0,0,0.5)"} />
             <text
               style={{ textAnchor: "start", fontSize: "0.5rem" }}

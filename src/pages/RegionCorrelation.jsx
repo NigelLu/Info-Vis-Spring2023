@@ -60,7 +60,6 @@ export default function RegionCorrelation({
     data: dataByGeoRegion,
     highlightedBlockInfo,
     setHighlightedBlockInfo,
-    heatmapColorRange: ["#e9f6e4", "#00441b"],
     width: Math.floor(windowWidth * LAYOUT.heatmap.width),
     height: Math.floor(windowHeight * LAYOUT.heatmap.height),
     xFieldInfo: {

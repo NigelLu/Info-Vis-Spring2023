@@ -87,10 +87,13 @@ export default function App() {
   };
   const tooltipProps = {
     width: windowWidth * 0.2,
-    height: windowWidth * 0.125,
+    height: windowWidth * 0.12,
     title: {
       cardTitle: highlightedBlockInfo.data?.country,
-      statsTitle: "Internet User Percentage",
+      statsTitle: {
+        internet: "Internet User Percentage",
+        gdp: "GDP per Capita in 2021 US dollars",
+      },
     },
     x:
       highlightedBlockInfo.x + windowWidth * 0.01 + windowWidth * 0.2 >= windowWidth * 0.95
@@ -100,7 +103,10 @@ export default function App() {
       highlightedBlockInfo.y + windowHeight * 0.01 + windowWidth * 0.125 >= windowHeight * 0.95
         ? highlightedBlockInfo.y - windowHeight * 0.01 - windowWidth * 0.125
         : highlightedBlockInfo.y + windowHeight * 0.01,
-    value: highlightedBlockInfo.data?.internetUsersPercentage,
+    value: {
+      gdp: highlightedBlockInfo.data?.GdpPerCapita,
+      internet: highlightedBlockInfo.data?.internetUsersPercentage,
+    },
   };
   // #endregion component props
 
